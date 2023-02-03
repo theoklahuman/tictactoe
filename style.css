@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+}
+
+.game-board {
+    display: grid;
+    margin: 40% 25%;
+    grid-template-rows: repeat(3, 4rem);
+    grid-template-columns: repeat(3, 4rem);
+}
+
+.board-section {
+    /* width: 3rem;
+    height: 3rem; */
+    display: block;
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid green;
+}
+
+.board-section:hover {
+    background: blue;
+}
