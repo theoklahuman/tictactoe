@@ -4,21 +4,31 @@
 
 .game-board {
     display: grid;
-    margin: 40% 25%;
-    grid-template-rows: repeat(3, 4rem);
-    grid-template-columns: repeat(3, 4rem);
+    grid-template-rows: repeat(3, 6rem);
+    grid-template-columns: repeat(3, 6rem);
+    margin: 8%;
 }
 
 .board-section {
-    /* width: 3rem;
-    height: 3rem; */
+    color: white;
     display: block;
-    width: 4rem;
-    height: 4rem;
+    width: 6rem;
+    height: 6rem;
     border: 1px solid green;
     cursor: pointer;
 }
 
 .board-section:hover {
     background: blue;
+    color: blue;
+}
+
+.board-section.already-played,
+.board-section.already-played:hover,
+.board-section.already-played:active {
+   background: black;
+   color: red; 
+   cursor: default;
+   font-weight: bolder;
+   text-align: center;
 }

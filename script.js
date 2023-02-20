@@ -1,21 +1,37 @@
 const boxes = document.querySelector(".game-board");
+const boardSection = document.querySelectorAll(".board-section");
 let boxPosition;
 
 boxes.addEventListener("click", function (event) {
   boxPosition = event.target.textContent;
   Gameboard.pushTogameBoard(+boxPosition);
   Gameboard.getPlayerSelections();
+  Gameboard.renderGameBoard();
   Gameboard.checkForWin();
+  boardSection[boxPosition - 1].classList.add("already-played");
 });
 
 const Gameboard = (function () {
   let gameBoard = [];
+  const renderGameBoard = function () {
+    for (const elements of gameBoard) {
+      if (
+        gameBoard.indexOf(elements) === 0 ||
+        gameBoard.indexOf(elements) % 2 === 0
+      ) {
+        boardSection[elements - 1].textContent = "X";
+      } else {
+        boardSection[elements - 1].textContent = "O";
+      }
+    }
+  };
   const checkForWin = function () {
     if (gameBoard.length >= 5) {
       checkWinner();
     }
   };
-  const endRoundAndRestartGame = function () {
+
+  const startNewRound = function () {
     gameBoard = [];
     playerOne = [];
     playerTwo = [];
@@ -23,11 +39,10 @@ const Gameboard = (function () {
   const pushTogameBoard = (content) => {
     gameBoard.push(content);
   };
-  const showEntries = () => {
-    console.log(gameBoard);
-  };
   let playerOne = [];
   let playerTwo = [];
+  let playerOneScore = 0;
+  let playerTwoScore = 0;
   const getPlayerSelections = function () {
     for (const selections of gameBoard) {
       if (playerOne.includes(selections) || playerTwo.includes(selections)) {
@@ -41,10 +56,6 @@ const Gameboard = (function () {
         playerTwo.push(selections);
       }
     }
-
-    showEntries();
-    console.log(`playerOne array is ${playerOne}`);
-    console.log(`playerTwo array is ${playerTwo}`);
   };
   const checkWinner = function () {
     let test1 = [1, 2, 3];
@@ -66,24 +77,34 @@ const Gameboard = (function () {
         playerTwo.includes(item)
       );
       if (testIsInPlayerOne) {
-        alert(`Player One is the winner!`);
-        endRoundAndRestartGame();
+        alert(`Player One won this round!`);
+        startNewRound();
+        console.log(playerOneScore);
+        ++playerOneScore;
+        countScore();
         return;
       } else if (testIsInPlayerTwo) {
-        alert(`Player Two is the winner!`);
-        endRoundAndRestartGame();
+        alert(`Player Two won this round`);
+        startNewRound();
+        ++playerTwoScore;
+        countScore();
         return;
+      }
+    }
+  };
+  const countScore = function () {
+    if (playerOneScore === 3 || playerTwoScore === 3) {
+      if (playerOneScore > playerTwoScore) {
+        alert(`Congratulations! Player One has won the game!!!`);
+      } else {
+        alert(`Congratulations! Player Two has won the game!!!`);
       }
     }
   };
   return {
     pushTogameBoard,
-    showEntries,
     getPlayerSelections,
     checkForWin,
-    checkWinner,
+    renderGameBoard,
   };
 })();
-
-// const user1 = player("Matt", "X");
-// const user2 = player("Ashley", "O");
