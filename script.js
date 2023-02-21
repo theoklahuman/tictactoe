@@ -1,14 +1,21 @@
 const boxes = document.querySelector(".game-board");
 const boardSection = document.querySelectorAll(".board-section");
+const newRoundButton = document.body.lastElementChild;
+const scoreBoard = document.body.getElementsByTagName("h4");
 let boxPosition;
 
 boxes.addEventListener("click", function (event) {
   boxPosition = event.target.textContent;
   Gameboard.pushTogameBoard(+boxPosition);
   Gameboard.getPlayerSelections();
+  boardSection[boxPosition - 1].classList.add("already-played");
   Gameboard.renderGameBoard();
   Gameboard.checkForWin();
-  boardSection[boxPosition - 1].classList.add("already-played");
+});
+
+newRoundButton.addEventListener("click", () => {
+  Gameboard.resetGameBoard();
+  newRoundButton.classList.toggle("visible");
 });
 
 const Gameboard = (function () {
@@ -25,6 +32,16 @@ const Gameboard = (function () {
       }
     }
   };
+
+  const resetGameBoard = function () {
+    let indexForBoard = 1;
+    for (let i = 0; i < 9; i++) {
+      boardSection[i].classList.remove("already-played");
+      boardSection[i].textContent = indexForBoard;
+      indexForBoard++;
+    }
+  };
+
   const checkForWin = function () {
     if (gameBoard.length >= 5) {
       checkWinner();
@@ -36,6 +53,11 @@ const Gameboard = (function () {
     playerOne = [];
     playerTwo = [];
   };
+
+  const beginRound = function () {
+    newRoundButton.classList.toggle("visible");
+  };
+
   const pushTogameBoard = (content) => {
     gameBoard.push(content);
   };
@@ -77,22 +99,47 @@ const Gameboard = (function () {
         playerTwo.includes(item)
       );
       if (testIsInPlayerOne) {
-        alert(`Player One won this round!`);
+        console.log(`Player One won this round!`);
         startNewRound();
         console.log(playerOneScore);
         ++playerOneScore;
         countScore();
+        beginRound();
         return;
       } else if (testIsInPlayerTwo) {
-        alert(`Player Two won this round`);
+        console.log(`Player Two won this round`);
         startNewRound();
         ++playerTwoScore;
         countScore();
+        beginRound();
+        return;
+      } else if (
+        gameBoard.length === 9 &&
+        testIsInPlayerOne === false &&
+        testIsInPlayerTwo === false
+      ) {
+        console.log(`This round ended in a draw! No winner!!!`);
+        beginRound();
         return;
       }
     }
   };
+
   const countScore = function () {
+    for (let i = 0; i < 2; i++) {
+      scoreBoard[i].className = "visible";
+      if (i === 0) {
+        scoreBoard[i].textContent = `Player One Score: ${playerOneScore}`;
+      } else {
+        scoreBoard[i].textContent = `Player Two Score: ${playerTwoScore}`;
+      }
+    }
+    alert(`player One has ${playerOneScore} points`);
+    alert(`player Two has ${playerTwoScore} points`);
+    declareWinner();
+  };
+
+  const declareWinner = function () {
     if (playerOneScore === 3 || playerTwoScore === 3) {
       if (playerOneScore > playerTwoScore) {
         alert(`Congratulations! Player One has won the game!!!`);
@@ -106,5 +153,6 @@ const Gameboard = (function () {
     getPlayerSelections,
     checkForWin,
     renderGameBoard,
+    resetGameBoard,
   };
 })();
