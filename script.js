@@ -103,14 +103,14 @@ const Gameboard = (function () {
         playerTwo.includes(item)
       );
       if (testIsInPlayerOne) {
-        alert(`Player One won this round!`);
+        alert(`X wins this round!`);
         startNewRound();
         ++playerOneScore;
         countScore();
         beginRound();
         return;
       } else if (testIsInPlayerTwo) {
-        alert(`Player Two won this round`);
+        alert(`O wins this round`);
         startNewRound();
         ++playerTwoScore;
         countScore();
@@ -122,6 +122,7 @@ const Gameboard = (function () {
         testIsInPlayerTwo === false
       ) {
         alert(`This round ended in a draw! No winner!!!`);
+        startNewRound();
         beginRound();
         return;
       }
@@ -132,9 +133,9 @@ const Gameboard = (function () {
     for (let i = 0; i < 2; i++) {
       scoreBoard[i].className = "visible";
       if (i === 0) {
-        scoreBoard[i].textContent = `Player One Score: ${playerOneScore}`;
+        scoreBoard[i].textContent = `X wins: ${playerOneScore}`;
       } else {
-        scoreBoard[i].textContent = `Player Two Score: ${playerTwoScore}`;
+        scoreBoard[i].textContent = `O wins: ${playerTwoScore}`;
       }
     }
     declareWinner();
@@ -143,9 +144,9 @@ const Gameboard = (function () {
   const declareWinner = function () {
     if (playerOneScore === 3 || playerTwoScore === 3) {
       if (playerOneScore > playerTwoScore) {
-        alert(`Congratulations! Player One has won the game!!!`);
+        alert(`Congratulations! X has won the game!!!`);
       } else {
-        alert(`Congratulations! Player Two has won the game!!!`);
+        alert(`Congratulations! O has won the game!!!`);
       }
       playerOneScore = 0;
       playerTwoScore = 0;
