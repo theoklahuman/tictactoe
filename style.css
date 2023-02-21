@@ -14,6 +14,7 @@ h4 {
 }
 
 .board-section {
+    background: white;
     color: white;
     display: block;
     width: 6rem;
@@ -40,8 +41,22 @@ h4 {
 
 .new-round {
     display: none;
+    width: 8rem;
+    height: 4rem;
+    background: green;
+    color: white;
+    margin: auto;
+    border: none;
+
+
 }
 
 .visible {
     display: block;
+    cursor: pointer;
+}
+
+.visible:hover {
+    background: #85a585;
+    color: black;
 }

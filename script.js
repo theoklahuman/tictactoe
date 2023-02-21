@@ -9,6 +9,7 @@ boxes.addEventListener("click", function (event) {
   Gameboard.pushTogameBoard(+boxPosition);
   Gameboard.getPlayerSelections();
   boardSection[boxPosition - 1].classList.add("already-played");
+  boardSection[boxPosition - 1].disabled = true;
   Gameboard.renderGameBoard();
   Gameboard.checkForWin();
 });
@@ -56,6 +57,9 @@ const Gameboard = (function () {
 
   const beginRound = function () {
     newRoundButton.classList.toggle("visible");
+    for (let i = 0; i < 9; i++) {
+      boardSection[i].disabled = false;
+    }
   };
 
   const pushTogameBoard = (content) => {
@@ -99,15 +103,14 @@ const Gameboard = (function () {
         playerTwo.includes(item)
       );
       if (testIsInPlayerOne) {
-        console.log(`Player One won this round!`);
+        alert(`Player One won this round!`);
         startNewRound();
-        console.log(playerOneScore);
         ++playerOneScore;
         countScore();
         beginRound();
         return;
       } else if (testIsInPlayerTwo) {
-        console.log(`Player Two won this round`);
+        alert(`Player Two won this round`);
         startNewRound();
         ++playerTwoScore;
         countScore();
@@ -118,7 +121,7 @@ const Gameboard = (function () {
         testIsInPlayerOne === false &&
         testIsInPlayerTwo === false
       ) {
-        console.log(`This round ended in a draw! No winner!!!`);
+        alert(`This round ended in a draw! No winner!!!`);
         beginRound();
         return;
       }
@@ -134,8 +137,6 @@ const Gameboard = (function () {
         scoreBoard[i].textContent = `Player Two Score: ${playerTwoScore}`;
       }
     }
-    alert(`player One has ${playerOneScore} points`);
-    alert(`player Two has ${playerTwoScore} points`);
     declareWinner();
   };
 
@@ -146,6 +147,8 @@ const Gameboard = (function () {
       } else {
         alert(`Congratulations! Player Two has won the game!!!`);
       }
+      playerOneScore = 0;
+      playerTwoScore = 0;
     }
   };
   return {
