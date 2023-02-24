@@ -2,6 +2,7 @@ const boxes = document.querySelector(".game-board");
 const boardSection = document.querySelectorAll(".board-section");
 const newRoundButton = document.body.lastElementChild;
 const scoreBoard = document.body.getElementsByTagName("h4");
+const backdrop = document.body.querySelector(".backdrop");
 let boxPosition;
 
 boxes.addEventListener("click", function (event) {
@@ -17,7 +18,12 @@ boxes.addEventListener("click", function (event) {
 newRoundButton.addEventListener("click", () => {
   Gameboard.resetGameBoard();
   newRoundButton.classList.toggle("visible");
+  toggleBackdrop();
 });
+
+const toggleBackdrop = function() {
+  backdrop.classList.toggle("show-backdrop");
+}
 
 const Gameboard = (function () {
   let gameBoard = [];
@@ -108,6 +114,7 @@ const Gameboard = (function () {
         ++playerOneScore;
         countScore();
         beginRound();
+        toggleBackdrop();
         return;
       } else if (testIsInPlayerTwo) {
         alert(`O wins this round`);
@@ -115,6 +122,7 @@ const Gameboard = (function () {
         ++playerTwoScore;
         countScore();
         beginRound();
+        toggleBackdrop();
         return;
       } else if (
         gameBoard.length === 9 &&
@@ -124,6 +132,7 @@ const Gameboard = (function () {
         alert(`This round ended in a draw! No winner!!!`);
         startNewRound();
         beginRound();
+        toggleBackdrop();
         return;
       }
     }

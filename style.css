@@ -6,6 +6,19 @@ h4 {
     display: none;
 }
 
+.backdrop {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    background: #000000cc;
+    display: none;
+    z-index: 5;
+}
+
+/* .backdrop.visible {
+    display: block;
+} */
+
 .game-board {
     display: grid;
     grid-template-rows: repeat(3, 6rem);
@@ -45,8 +58,10 @@ h4 {
     height: 4rem;
     background: green;
     color: white;
-    margin: auto;
+    margin: auto 30%;
     border: none;
+    position: fixed;
+    z-index: 10;
 
 
 }
@@ -59,4 +74,9 @@ h4 {
 .visible:hover {
     background: #85a585;
     color: black;
+}
+
+.show-backdrop {
+    background: 85a585;
+    display: block;
 }
